@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+
+  minio:
+    container_name: minio
+    restart: always
+    image: minio/minio:latest
+    environment:
+      - MINIO_ACCESS_KEY=chic
+      - MINIO_SECRET_KEY=chicminio
+    volumes:
+      - ./minio_data:/data
+    ports:
+      - "9009:9000"
+    command: server /data
+    networks:
+      - chic_network
+
+  dremio:
+    container_name: dremio 
+    depends_on: 
+      - minio
+    user: root
+    restart: always
+    image: dremio/dremio-oss:15.0
+    volumes:
+      - ./core-site.xml:/opt/dremio/conf/core-site.xml:ro
+      - ./dremio.conf:/opt/dremio/conf/dremio.conf:ro
+      - ./dremio-env:/opt/dremio/conf/dremio-env:ro
+    ports:
+      - "9047:9047"   # UI (HTTP)
+      - "31010:31010" # ODBC/JDBC clients
+      - "2181:2181"   # ZooKeeper
+      - "45678:45678" # Inter-node communication
+    networks:
+      - chic_network
+
+networks:
+  chic_network:
+    external: true
