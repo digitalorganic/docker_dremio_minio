@@ -8,12 +8,12 @@
     <property>
         <name>fs.s3a.access.key</name>
         <description>Minio server access key ID.</description>
-        <value>chic</value>
+        <value>miniokey</value>
     </property>
     <property>
         <name>fs.s3a.secret.key</name>
         <description>Minio server secret key.</description>
-        <value>chicminio</value>
+        <value>miniosecreit</value>
     </property>
     <property>
         <name>fs.s3a.aws.credentials.provider</name>
