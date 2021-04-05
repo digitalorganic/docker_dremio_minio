@@ -7,15 +7,15 @@ services:
     restart: always
     image: minio/minio:latest
     environment:
-      - MINIO_ACCESS_KEY=chic
-      - MINIO_SECRET_KEY=chicminio
+      - MINIO_ACCESS_KEY=miniokey
+      - MINIO_SECRET_KEY=miniosecret
     volumes:
       - ./minio_data:/data
     ports:
       - "9009:9000"
     command: server /data
     networks:
-      - chic_network
+      - mynetwork
 
   dremio:
     container_name: dremio 
@@ -34,8 +34,8 @@ services:
       - "2181:2181"   # ZooKeeper
       - "45678:45678" # Inter-node communication
     networks:
-      - chic_network
+      - mynetwork
 
 networks:
-  chic_network:
+  mynetwork:
     external: true
